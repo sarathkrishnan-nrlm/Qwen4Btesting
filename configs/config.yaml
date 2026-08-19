@@ -1,0 +1,27 @@
+# tiled_detection_probe configuration
+#
+# Standalone -- does not import or reference sagemaker_finetuning/ at
+# runtime. data/ is a copy of that project's held-out TEST split only
+# (29 images, ~35MB -- not the train split, which this probe never
+# touches), made so this whole folder can be uploaded to a SageMaker
+# notebook instance on its own.
+
+model:
+  base_model: "Qwen/Qwen3-VL-4B-Instruct"
+  # transformers must be installed from source for Qwen3-VL support
+  # (see requirements.txt) -- not yet in a released PyPI version.
+  # No LoRA adapter here on purpose -- this probes the BASE model.
+
+data:
+  test_jsonl: data/jsonl/test.jsonl
+  test_images_dir: data/images
+
+tiling:
+  # Same geometry already proven by the RT-DETR pipeline
+  # (rtdetr_pipeline/training/tile_dataset.py / rtdetr_infer_tiled.py):
+  # 640x640 tiles, 20% overlap, sliding grid with edge-snapping.
+  tile_size: 640
+  overlap_frac: 0.2
+
+logging:
+  level: INFO

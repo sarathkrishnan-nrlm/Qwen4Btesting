@@ -1,0 +1,17 @@
+# Core
+PyYAML>=6.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# Qwen3-VL requires transformers built from source (not yet in a
+# released PyPI version as of writing) -- install separately:
+#   pip install -U "git+https://github.com/huggingface/transformers"
+# Listed here as a comment, not a pinned line, since pip can't express
+# "latest from a git branch" as a normal requirements.txt entry.
+
+torch>=2.1.0
+bitsandbytes>=0.43.0
+accelerate>=0.30.0
+
+# NOTE: no peft here -- this probe deliberately runs the BASE model,
+# no LoRA adapter involved.
